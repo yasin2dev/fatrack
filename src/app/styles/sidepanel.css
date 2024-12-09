@@ -1,0 +1,22 @@
+.sidepanel {
+    background-color: #303030;
+    border: 1px solid #303030;
+    border-radius: 0.5rem;
+    height: 250px;
+}
+
+.break {
+    flex-basis: 100%;
+    height: 0;
+}
+
+.fatBtn {
+    height: 2rem;
+    align-content: center;
+}
+
+.fatBtn:hover {
+    cursor: pointer;
+    background-color: #404040;
+    border-radius: 0.25rem;
+}
