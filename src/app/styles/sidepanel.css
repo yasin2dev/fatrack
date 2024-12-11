@@ -21,3 +21,7 @@
     background-color: #404040;
     border-radius: 0.25rem;
 }
+
+.collapsibleBtn {
+    font-size: 1rem;
+}
