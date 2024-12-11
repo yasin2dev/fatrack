@@ -4,6 +4,7 @@
   "private": true,
   "main": "src/api/v1/server.ts",
   "type": "module",
+  "proxy": "http://localhost:3001",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

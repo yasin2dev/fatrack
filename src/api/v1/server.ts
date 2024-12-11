@@ -21,7 +21,7 @@ export const Main = () => {
 
     info('Define Controller Routing');
     app.get('/main/healthcheck', async (req, res, next): Promise<any> => {
-        return res.status(200).json({hello: 'world'});
+        return res.status(200).json({products: [{id: 1, title: "WORLD", price: "10.99"}]});
     })
 
     info('Define Controller Routing');
