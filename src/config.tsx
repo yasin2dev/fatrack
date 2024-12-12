@@ -1,6 +1,6 @@
 import {usePathname} from "next/navigation";
 
-import {Home, Settings, DollarSign} from "lucide-react"
+import {Home, Settings, DollarSign, Clock} from "lucide-react"
 
 export const NavItems = () => {
     const pathname = usePathname();
@@ -19,10 +19,17 @@ export const NavItems = () => {
         },
         {
             name: "Faturalar",
-            href: "/bills",
+            href: "/faturalar",
             icon: <DollarSign size={20}/>,
-            active: isNavItemActive(pathname, "/bills"),
+            active: isNavItemActive(pathname, "/faturalar"),
             position: "top",
+        },
+        {
+            name: "Yaklaşanlar",
+            href: "/yaklasanlar",
+            icon: <Clock size={20}/>,
+            active: isNavItemActive(pathname, "/yaklasanlar"),
+            position: "top" 
         },
         {
             name: 'Ayarlar',

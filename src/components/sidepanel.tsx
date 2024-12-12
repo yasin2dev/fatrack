@@ -2,7 +2,6 @@
 
 import React from "react"
 import {useState, useEffect, Fragment} from "react"
-import '@/styles/sidepanel.css'
 
 
 import {cn} from "@/lib/utils";
