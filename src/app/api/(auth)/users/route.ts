@@ -74,3 +74,42 @@ export const PATCH = async (request: Request) => {
     }
 }
 
+export const DELETE = async (request: Request) => {
+    try {
+        const {searchParams} = new URL(request.url);
+        const userId = searchParams.get("userId");
+
+        if (!userId) {
+            return new NextResponse(JSON.stringify({message: "ID not found"}), {
+                status: 400
+            });
+        }
+
+        if (!Types.ObjectId.isValid(userId)) {
+            return new NextResponse(JSON.stringify({ message: "Invalid user ID"}), {
+                status: 400
+            });
+        }
+
+        await connect();
+
+        const deletedUser = await User.findByIdAndDelete(
+            new Types.ObjectId(userId)
+        );
+
+        if(!deletedUser) {
+            return new NextResponse(JSON.stringify({ message: "User not found on database"}), {
+                status: 404
+            });
+        }
+
+        return new NextResponse(JSON.stringify({message: "User is deleted", user: deletedUser}), {
+            status: 200
+        });
+
+    } catch (err: any) {
+        return new NextResponse("Error in deleting users" + err.message, {
+            status: 500
+        });
+    }
+} 
