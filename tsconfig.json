@@ -22,7 +22,7 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "./src/api/v1/config/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "./src/api/v1/config/*.ts", "next.config.js", "next.config.js"],
   "exclude": ["node_modules"],
   "ts-node": {
     "compilerOptions": {
