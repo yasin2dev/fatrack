@@ -1,10 +1,11 @@
 import React from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSignOut} from "@fortawesome/free-solid-svg-icons"
+import "@/app/styles/header.css"
 
 function Header() {
     return (
-        <header className={"mx-auto flex items-center justify-between"}>
+        <header className={"mx-auto flex items-center justify-between header"}>
             <div className={"flex justify-start"}>
                 <h2 className={"text-start mx-3 my-2 text-xl font-bold"}>{process.env.appname}</h2>
             </div>

@@ -32,7 +32,7 @@ export default function RootLayout({
       <Header/>
       <div className={"flex"}>
           <SidePanel/>
-        <div className={"w-full overflow-x-auto bg-gray-800"}>
+        <div className={"w-full overflow-x-auto"}>
           <div className={"sm:[calc(99vh-60px)] overflow-auto"}>
             <div className={"w-full flex justify-center mx-auto overflow-auto h-[calc(100vh-5vh)] overflow-y-auto relative"}>
               <div className={"w-full mt-3"}>{children}</div>
