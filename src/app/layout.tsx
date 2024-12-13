@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 const f_roboto = Roboto({
-  weight: '400',
+  weight: '500',
   subsets: ['latin'],
 });
 

@@ -1,6 +1,12 @@
 import connect from "@/lib/db";
 import User from "@/lib/modals/user";
+import { Types } from "mongoose";
 import { NextResponse } from "next/server";
+
+
+// Define ObjectId data type from mongoose
+const ObjectId = require("mongoose").Types.ObjectId;
+
 
 export const GET = async () => {
     try {
@@ -30,3 +36,41 @@ export const POST = async (request: Request) => {
         });
     }
 }
+
+
+export const PATCH = async (request: Request) => {
+    try {
+        const body = await request.json();
+        const {userId, newUsername, newEmail} = body;
+        await connect();
+
+        if (!userId || !newUsername || !newEmail) {
+            return new NextResponse(JSON.stringify({message: "ID, new username or new email not found"}), {
+                status: 400
+            });
+        }
+
+
+        if (!Types.ObjectId.isValid(userId)) {
+            return new NextResponse(JSON.stringify({ message: "Invalid user ID"}), {
+                status: 400
+            });
+        }
+
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: new ObjectId(userId) },
+            { username: newUsername, email: newEmail },
+            { new: true }
+        );
+
+        return new NextResponse(JSON.stringify({user: updatedUser}), {
+            status: 200
+        });
+
+    } catch (err: any) {
+        return new NextResponse("Error in updating users" + err.message, {
+            status: 500
+        });
+    }
+}
+
