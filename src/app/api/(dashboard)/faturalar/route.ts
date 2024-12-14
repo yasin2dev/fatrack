@@ -114,7 +114,7 @@ export const POST = async (request: Request) => {
 
         await newFatura.save();
 
-        return new NextResponse(JSON.stringify({message: "Fatura successfully created"}), {
+        return new NextResponse(JSON.stringify({message: "Fatura successfully created", newFatura}), {
             status: 200
         })
 
