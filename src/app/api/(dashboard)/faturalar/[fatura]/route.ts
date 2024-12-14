@@ -10,19 +10,11 @@ export const GET = async (request: Request, context: {params: any}) => {
     try {
         const {searchParams} = new URL(request.url);
         const userId = searchParams.get("userId");
-        const categoryId = searchParams.get("categoryId")
-
          
         if (!userId || !Types.ObjectId.isValid(userId)) {
             return new NextResponse(JSON.stringify({message: "userId missing or invalid"}), {
                 status: 400
             });            
-        }
-
-        if (!categoryId || !Types.ObjectId.isValid(categoryId)) {
-            return new NextResponse(JSON.stringify({message: "categoryId missing or invalid"}), {
-                status: 400
-            })
         }
 
         if (!faturaId || !Types.ObjectId.isValid(faturaId)) {
@@ -41,18 +33,9 @@ export const GET = async (request: Request, context: {params: any}) => {
             });
         }
 
-        const category = await Category.findById(categoryId);
-
-        if (!category) {
-            return new NextResponse(JSON.stringify({message: "category not found"}), {
-                status: 400
-            });
-        }
-
         const fatura = await Fatura.findOne({
             _id: faturaId,
             user: userId,
-            category: categoryId
         });
 
         if(!fatura) {

@@ -10,17 +10,12 @@ export const GET = async (request: Request) => {
         const {searchParams} = new URL(request.url);
         const userId = searchParams.get("userId");
         const categoryId = searchParams.get("categoryId")
+        const searchKeywords = searchParams.get("keyword") as string;
         
         if (!userId || !Types.ObjectId.isValid(userId)) {
             return new NextResponse(JSON.stringify({message: "userId missing or invalid"}), {
                 status: 400
             });            
-        }
-
-        if (!categoryId || !Types.ObjectId.isValid(categoryId)) {
-            return new NextResponse(JSON.stringify({message: "categoryId missing or invalid"}), {
-                status: 400
-            })
         }
 
         await connect()
@@ -33,17 +28,8 @@ export const GET = async (request: Request) => {
             });
         }
 
-        const category = await Category.findById(categoryId);
-
-        if (!category) {
-            return new NextResponse(JSON.stringify({message: "category not found"}), {
-                status: 400
-            });
-        }
-
         const filter: any = {
             user: new Types.ObjectId(userId),
-            category: new Types.ObjectId(categoryId)
         };
 
         const faturalar = await Fatura.find(filter);
@@ -111,6 +97,7 @@ export const POST = async (request: Request) => {
             user: new Types.ObjectId(userId),
             category: new Types.ObjectId(categoryId)
         });
+        /* For now, it's getting category (fatura tipi) / (fatura type 'fatCategory') from URL. When ready to use front-end it's will be getting from combobox or something like that*/
 
         await newFatura.save();
 
