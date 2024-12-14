@@ -9,8 +9,9 @@ export const GET = async (request: Request) => {
     try {
         const {searchParams} = new URL(request.url);
         const userId = searchParams.get("userId");
-        const categoryId = searchParams.get("categoryId")
         const searchKeywords = searchParams.get("keyword") as string;
+        const startDate = searchParams.get("startDate");
+        const endDate = searchParams.get("endDate");
         
         if (!userId || !Types.ObjectId.isValid(userId)) {
             return new NextResponse(JSON.stringify({message: "userId missing or invalid"}), {
@@ -31,6 +32,32 @@ export const GET = async (request: Request) => {
         const filter: any = {
             user: new Types.ObjectId(userId),
         };
+
+        if (searchKeywords) {
+            filter.$or = [
+                {
+                    title: {$regex: searchKeywords, $options: "i"},
+                },
+                {
+                    fatCategory: {$regex: searchKeywords, $options: "i"}
+                }
+            ]
+        }
+
+        if (startDate && endDate) {
+            filter.createdAt = {
+                $gte: new Date(startDate),
+                $lte: new Date(endDate)
+            }
+        } else if (startDate) {
+            filter.createdAt = {
+                $gte: new Date(startDate),
+            }
+        } else if (endDate) {
+            filter.createdAt = {
+                $lte: new Date(endDate)
+            }
+        }
 
         const faturalar = await Fatura.find(filter);
 
