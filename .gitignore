@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+src/app/auth
+#TESTING AUTH OPERATIONS
 
 # next.js
 /.next/
