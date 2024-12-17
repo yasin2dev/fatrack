@@ -5,6 +5,7 @@ const FaturaSchema = new Schema(
     {
         title: {type: "string", required: true},
         fatura_no: {type: "string", required: true},
+        birim: {type: "string", required: true},
         fat_type: {type: "string", required: true},
         origin: {type: "string", require: true},
         root_amount: {type: "number", require: false},

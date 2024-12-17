@@ -63,7 +63,7 @@ function Page() {
             {data?.map(fatura => (
                 <div className='text-center bg-amber-500 my-5 mx-2 rounded p-2 w-full h-16 justify-center pl-6'>
                     <p><span className={"font-bold"}>Ürün: </span>{fatura.title} - <span className={"font-bold text-black"}>Fatura No: </span>{fatura.fatura_no}</p>
-                    
+                    <p><span className={"text-center"}>Tutar: {fatura.total}{fatura.birim}</span></p>
                 </div>
             ))}
         </div>
