@@ -81,7 +81,19 @@ export const POST = async (request: Request) => {
         const categoryId = searchParams.get("categoryId");
 
         const body = await request.json();
-        const {title, origin, root_amount, tax_val, total, owner} = body;
+        const {
+            title,
+            fatura_no,
+            fat_type,
+            origin,
+            root_amount,
+            fat_date,
+            fat_edit_date,
+            tax_rat,
+            tax_val,
+            total,
+            owner,
+            to_who } = body;
 
         if (!userId || !Types.ObjectId.isValid(userId)) {
             return new NextResponse(JSON.stringify({message: "userId missing or invalid"}), {
@@ -116,11 +128,17 @@ export const POST = async (request: Request) => {
 
         const newFatura = new Fatura({
             title,
+            fatura_no,
+            fat_type,
             origin,
             root_amount,
+            fat_date,
+            fat_edit_date,
+            tax_rat,
             tax_val,
             total,
             owner,
+            to_who,
             user: new Types.ObjectId(userId),
             category: new Types.ObjectId(categoryId)
         });
