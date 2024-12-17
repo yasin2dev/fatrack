@@ -7,11 +7,16 @@ interface Data {
     _id: string;
     title: string;
     fatura_no: string;
+    fat_type: string;
     origin: string;
     root_amount: number;
+    fat_date: Date;
+    fat_edit_date: Date;
+    tax_rat: number;
     tax_val: number;
     total: number;
     owner: string;
+    to_who: string;
     user: string;
     createdAt: Date;
 }
@@ -45,6 +50,10 @@ function Page() {
 
     if (error) {
         return <div className={"text-center my-2"}>Hata: {error}</div>;
+    }
+
+    if (Object.keys(data).length <= 0) {
+        return <div>NO DATA</div>
     }
 
     {/* TODO: Data successfully fetched and listed in front-end Fatura's now can be list dynamically */}
