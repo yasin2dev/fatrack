@@ -8,6 +8,7 @@ interface Data {
     title: string;
     fatura_no: string;
     fat_type: string;
+    birim: string;
     origin: string;
     root_amount: number;
     fat_date: Date;
