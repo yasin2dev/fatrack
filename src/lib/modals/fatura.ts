@@ -7,7 +7,6 @@ const FaturaSchema = new Schema(
         fatura_no: {type: "string", required: true},
         origin: {type: "string", require: true},
         root_amount: {type: "number", require: false},
-        tax_rat: {type: "number", require: false},
         tax_val: {type: "number", require: false},
         total: {type: "number", require: true},
         owner: {type: "string", require: false},
