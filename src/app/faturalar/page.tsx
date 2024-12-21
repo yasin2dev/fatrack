@@ -3,9 +3,10 @@
 import { useEffect, useState } from 'react';
 import axios from "axios"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons'; 
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { Types } from 'mongoose';
 
-interface Data {
+interface FatData {
     _id: string;
     title: string;
     fatura_no: string;
@@ -21,12 +22,13 @@ interface Data {
     owner: string;
     to_who: string;
     user: string;
+    category: string;
     createdAt: Date;
 }
 
 
 function Page() {
-    const [data, setData] = useState<Data[] | null>(null);
+    const [data, setData] = useState<FatData[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     useEffect(() => {
@@ -64,17 +66,60 @@ function Page() {
     {/* TODO: Data successfully fetched and listed in front-end Fatura's now can be list dynamically */ }
     return (
         <div className={"justify-center mx-10"}>
-            {process.env.TOKEN}
-            {data?.map(fatura => (
-                <div className='bg-blue-700 my-5 mx-2 rounded p-2 w-full h-fit pl-6'>
-                    <div className='flex'>
-                        <p><span className={"font-bold text-right"}>Ürün: </span>{fatura.title} - <span className={"font-bold"}>Fatura No: </span>{fatura.fatura_no}</p>
-                    </div>
-                    <FontAwesomeIcon icon={faTrash} className={"fa fa-trash float-end cursor-pointer hover:text-red-500 mr-6"}/>
-                    <p><span className={"font-bold"}>{fatura.origin}</span></p>
-                    <p><span className={"items-end"}>Tutar: {fatura.total} {fatura.birim}</span></p>
-                </div>
-            ))}
+            <h2 className={"text-lg"}>e-Arşiv olarak size kesilen faturalarınız: </h2>
+            {data?.map(fatura => {
+                if (fatura.category === "675debf13e48f596cb3730f1" && fatura.fat_type === "SATIS") {
+                    return (
+                        <div className='bg-blue-700 my-5 mx-2 rounded p-2 w-full h-fit pl-6'>
+                            <div className='flex'>
+                                <p><span className={"font-bold text-right"}>Ürün: </span>{fatura.title} - <span className={"font-bold"}>Fatura No: </span>{fatura.fatura_no}</p>
+                            </div>
+                            <FontAwesomeIcon icon={faTrash} className={"fa fa-trash float-end cursor-pointer hover:text-red-500 mr-6"} />
+                            <p><span className={"font-bold"}>{fatura.origin}</span></p>
+                            <p><span className={"items-end"}>Tutar: {fatura.total} {fatura.birim}</span></p>
+                        </div>
+                    )
+                }
+                else if (fatura.category === "675debf13e48f596cb3730f1" && fatura.fat_type === "IADE") {
+                    return (
+                        <div className='bg-red-600 my-5 mx-2 rounded p-2 w-full h-fit pl-6'>
+                            <div className='flex'>
+                                <p><span className={"font-bold text-right"}>Ürün: </span>{fatura.title} - <span className={"font-bold"}>Fatura No: </span>{fatura.fatura_no}</p>
+                            </div>
+                            <FontAwesomeIcon icon={faTrash} className={"fa fa-trash float-end cursor-pointer hover:text-red-500 mr-6"} />
+                            <p><span className={"font-bold"}>{fatura.origin}</span></p>
+                            <p><span className={"items-end"}>Tutar: {fatura.total} {fatura.birim}</span></p>
+                        </div>
+                    )
+                }
+            })}
+            <h1 className={"text-lg"}>e-Fatura olarak size veya şirketinize kesilen faturalar: </h1>
+            {data?.map(fatura => {
+                if (fatura.category === "675debfb3e48f596cb3730f3" && fatura.fat_type === "SATIS") {
+                    return (
+                        <div className='bg-blue-700 my-5 mx-2 rounded p-2 w-full h-fit pl-6'>
+                            <div className='flex'>
+                                <p><span className={"font-bold text-right"}>Ürün: </span>{fatura.title} - <span className={"font-bold"}>Fatura No: </span>{fatura.fatura_no}</p>
+                            </div>
+                            <FontAwesomeIcon icon={faTrash} className={"fa fa-trash float-end cursor-pointer hover:text-red-500 mr-6"} />
+                            <p><span className={"font-bold"}>{fatura.origin}</span></p>
+                            <p><span className={"items-end"}>Tutar: {fatura.total} {fatura.birim}</span></p>
+                        </div>
+                    )
+                }
+                else if (fatura.category === "675debfb3e48f596cb3730f3" && fatura.fat_type === "IADE") {
+                    return (
+                        <div className='bg-red-600 my-5 mx-2 rounded p-2 w-full h-fit pl-6'>
+                            <div className='flex'>
+                                <p><span className={"font-bold text-right"}>Ürün: </span>{fatura.title} - <span className={"font-bold"}>Fatura No: </span>{fatura.fatura_no}</p>
+                            </div>
+                            <FontAwesomeIcon icon={faTrash} className={"fa fa-trash float-end cursor-pointer hover:text-red-500 mr-6"} />
+                            <p><span className={"font-bold"}>{fatura.origin}</span></p>
+                            <p><span className={"items-end"}>Tutar: {fatura.total} {fatura.birim}</span></p>
+                        </div>
+                    )
+                }
+            })}
         </div>
     );
 }
