@@ -6,7 +6,7 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 
 import Header from "@/app/header";
 import SidePanel from "@/components/sidepanel";
-
+import Create from "@/components/modal/create";
 config.autoAddCss = false;
 
 export const metadata: Metadata = {
