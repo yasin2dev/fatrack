@@ -20,6 +20,8 @@ function Header() {
   const handleOpen = () => setOpen(!open);
 
   const urunRef = useRef() as MutableRefObject<HTMLInputElement>;
+  const fatNoRef = useRef() as MutableRefObject<HTMLInputElement>;
+
   let fatCat: any;
   let fatType: any;
   if (selectedFatCat === "e-Fatura") {
@@ -35,16 +37,18 @@ function Header() {
   }
 
   const handleSubmit = (event: any) => {
-    event.preventDefault()  ;
+    event.preventDefault();
     axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/faturalar/6769e8fe796d34aee398e7b4?userId=675b5ff200e40d7c11cf81b6`,
       {
         "title": `${urunRef.current.value}`,
+        "fatura_no": `${fatNoRef.current.value}`,
         "fat_type": `${fatType}`,
         "category": `${fatCat}`,
       },
       {headers: {"Authorization": `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`}
     }).then(response => {
       console.log(response.data)
+      window.location.reload()
     })
     setOpen(false);
   }
@@ -63,19 +67,21 @@ function Header() {
               transition
               className="relative transform overflow-hidden rounded-md bg-white text-left shadow-xl transition-all data-[closed]:translate-y-4 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:my-8 sm:w-full sm:max-w-xl data-[closed]:sm:translate-y-0 data-[closed]:sm:scale-95"
             >
-              <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+              <div className="ModalBg px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
                   <div className="mx-auto flex size-24 shrink-0 items-center justify-center rounded-full bg-green-100 sm:mx-10 sm:size-10">
                     <FontAwesomeIcon icon={faPlus} className="size-6 text-green-600" />
                   </div>
                   <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                    <DialogTitle as="h1" className="text-lg mb-5 font-bold text-gray-900 sm:text-center">
+                    <DialogTitle as="h1" className="text-lg mb-5 font-bold text-white sm:text-center">
                       Fatura Oluştur
                     </DialogTitle>
-                    <form method="patch" className='text-black' onSubmit={handleSubmit}>
+                    <form method="patch" className='text-white' onSubmit={handleSubmit}>
                       <label className='text-md'>
-                        Ürün: &nbsp; <input ref={urunRef} name="title" className='p-1 outline-1 min-w-full rounded-sm outline outline-gray-400 focus:outline-1 focus:outline-gray-600' spellCheck={false} placeholder='örn. Tekstil Ürünleri' />
+                        Ürün: &nbsp; <input ref={urunRef} name="title" className='text-black p-1 outline-1 min-w-full rounded-sm outline outline-gray-400 focus:outline-1 focus:outline-gray-600' spellCheck={false} placeholder='örn. Tekstil Ürünleri' />
                       </label>
+                      <h3 className='mr-2 mt-3'>Fatura No:</h3>
+                      <input ref={fatNoRef} name="fatNo" className='text-black p-1 outline-1 min-w-full rounded-sm outline outline-gray-400 focus:outline-1 focus:outline-gray-600' spellCheck={false} placeholder='örn. ABC20240000001' />
                       <Separator.Root
                         className='SeparatorRoot my-3'
                         decorative
@@ -127,7 +133,7 @@ function Header() {
                   </div>
                 </div>
               </div>
-              <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+              <div className="ModalBg px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                 <button
                   type="button"
                   onClick={handleSubmit}
