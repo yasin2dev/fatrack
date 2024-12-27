@@ -94,6 +94,7 @@ export const POST = async (request: Request) => {
             tax_val,
             total,
             owner,
+            category,
             to_who } = body;
 
         if (!userId || !Types.ObjectId.isValid(userId)) {
@@ -118,9 +119,9 @@ export const POST = async (request: Request) => {
             });
         }
 
-        const category = await Category.findById(categoryId);
+        const _category = await Category.findById(categoryId);
 
-        if (!category) {
+        if (!_category) {
             return new NextResponse(JSON.stringify({message: "category not found"}), {
                 status: 400
             });

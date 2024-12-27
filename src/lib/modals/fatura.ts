@@ -17,7 +17,7 @@ const FaturaSchema = new Schema(
         owner: {type: "string", require: false},
         to_who: {type: "string", require: true},
         user: { type: Schema.Types.ObjectId, ref: "User" },
-        category: { type: Schema.Types.ObjectId, ref: "Category" },
+        category: { type: "string", ref: "Category" },
     },
     {
         timestamps: true

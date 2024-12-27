@@ -33,7 +33,7 @@ function Page() {
     const [error, setError] = useState<string | null>(null);
     useEffect(() => {
         // API'ye istek atıyoruz
-        axios.get<Data[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/api/faturalar`, {
+        axios.get<FatData[]>(`${process.env.NEXT_PUBLIC_BASE_URL}/api/faturalar`, {
             params: { "userId": "675b5ff200e40d7c11cf81b6" }, // Example user ID from mongodb.
             headers: {
                 "Authorization": `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`, // For now, using manuel token system. Auth system inProgress
@@ -103,6 +103,7 @@ function Page() {
                             </div>
                             <FontAwesomeIcon icon={faTrash} className={"fa fa-trash float-end cursor-pointer hover:text-red-500 mr-6"} />
                             <p><span className={"font-bold"}>{fatura.origin}</span></p>
+                            <p><span className={"font-bold"}>{fatura.category}</span></p>
                             <p><span className={"items-end"}>Tutar: {fatura.total} {fatura.birim}</span></p>
                         </div>
                     )

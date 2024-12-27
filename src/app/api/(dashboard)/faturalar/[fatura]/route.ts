@@ -74,6 +74,7 @@ export const PATCH = async (request: Request, context: { params: any }) => {
             tax_val,
             total,
             owner,
+            category,
             to_who } = body;
 
         const { searchParams } = new URL(request.url);
@@ -124,6 +125,7 @@ export const PATCH = async (request: Request, context: { params: any }) => {
                 tax_val,
                 total,
                 owner,
+                category,
                 to_who,
             },
             { new: true }

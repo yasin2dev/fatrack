@@ -1,3 +1,15 @@
 .header {
     background-color: #171717;
 }
+
+.SeparatorRoot {
+	background-color: gray;
+}
+.SeparatorRoot[data-orientation="horizontal"] {
+	height: 1px;
+	width: 100%;
+}
+.SeparatorRoot[data-orientation="vertical"] {
+	height: 100%;
+	width: 1px;
+}
