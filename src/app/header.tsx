@@ -22,22 +22,24 @@ function Header() {
   const urunRef = useRef() as MutableRefObject<HTMLInputElement>;
   const fatNoRef = useRef() as MutableRefObject<HTMLInputElement>;
 
+
   let fatCat: any;
   let fatType: any;
-  if (selectedFatCat === "e-Fatura") {
-    fatCat = new Types.ObjectId(process.env.NEXT_PUBLIC_E_FATURA_ID)
-  } else if (selectedFatCat === "e-Arşiv") {
+  if (selectedFatCat === faturaCategories[0]) {
     fatCat = new Types.ObjectId(process.env.NEXT_PUBLIC_E_ARSIV_ID)
+  } else if (selectedFatCat === faturaCategories[1]) {
+    fatCat = new Types.ObjectId(process.env.NEXT_PUBLIC_E_FATURA_ID)
   }
 
-  if (selectedFatType === "Satış") {
+  if (selectedFatType === faturaTypes[0]) {
     fatType = "SATIS"
-  } else if (selectedFatType === "İade") {
+  } else if (selectedFatType === faturaTypes[1]) {
     fatType = "IADE"
   }
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    // For now axios is patching data for test fields and create operations.
     axios.patch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/faturalar/6769e8fe796d34aee398e7b4?userId=675b5ff200e40d7c11cf81b6`,
       {
         "title": `${urunRef.current.value}`,
@@ -45,11 +47,12 @@ function Header() {
         "fat_type": `${fatType}`,
         "category": `${fatCat}`,
       },
-      {headers: {"Authorization": `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`}
-    }).then(response => {
-      console.log(response.data)
-      window.location.reload()
-    })
+      {
+        headers: { "Authorization": `Bearer ${process.env.NEXT_PUBLIC_TOKEN}` }
+      }).then(response => {
+        console.log(response.data)
+        window.location.reload()
+      })
     setOpen(false);
   }
 
@@ -69,7 +72,7 @@ function Header() {
             >
               <div className="ModalBg px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
-                  <div className="mx-auto flex size-24 shrink-0 items-center justify-center rounded-full bg-green-100 sm:mx-10 sm:size-10">
+                  <div className="mx-auto flex size-24 shrink-0 items-center justify-center rounded-full bg-green-100 sm:mx-7 sm:size-10">
                     <FontAwesomeIcon icon={faPlus} className="size-6 text-green-600" />
                   </div>
                   <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
@@ -92,21 +95,21 @@ function Header() {
                         onChange={setSelectedFatCat}
                         aria-label='Fatura Tipi'
                         className={"flex"}
-                        
+
                       >
                         <h3 className='mr-2'>Fatura Kategorisi:</h3>
                         {faturaCategories.map((category) => (
                           <Field key={category} className="flex items-center gap-2">
-                          <Radio
-                            value={category}
-                            className="group flex size-5 items-center justify-center rounded-full border bg-white data-[checked]:bg-blue-700"
-                          >
-                          <span className="invisible size-2 rounded-full bg-white group-data-[checked]:visible" />
-                          </Radio>
-                          <Label>{category}</Label>
-                          &nbsp; 
+                            <Radio
+                              value={category}
+                              className="group flex size-5 items-center justify-center rounded-full border bg-white data-[checked]:bg-blue-700"
+                            >
+                              <span className="invisible size-2 rounded-full bg-white group-data-[checked]:visible" />
+                            </Radio>
+                            <Label>{category}</Label>
+                            &nbsp;
                           </Field>
-                        ))}                       
+                        ))}
                       </RadioGroup>
                       <RadioGroup
                         value={selectedFatType}
@@ -114,19 +117,19 @@ function Header() {
                         aria-label='Fatura Tipi'
                         className={"flex mt-3"}
                       >
-                      <h3 className='mr-2'>Fatura Tipi:</h3>
-                      {faturaTypes.map((type) => (
-                        <Field key={type} className={"flex items-center gap-2"}>
-                          <Radio
-                            value={type}
-                            className={"group flex size-5 items-center justify-center rounded-full border bg-white data-[checked]:bg-blue-700"}
-                          >
-                            <span className={"invisible size-2 rounded-full bg-white group-data-[checked]:visible"}/>
-                          </Radio>
-                          <Label>{type}</Label>
-                          &nbsp;
-                        </Field>
-                      ))}  
+                        <h3 className='mr-2'>Fatura Tipi:</h3>
+                        {faturaTypes.map((type) => (
+                          <Field key={type} className={"flex items-center gap-2"}>
+                            <Radio
+                              value={type}
+                              className={"group flex size-5 items-center justify-center rounded-full border bg-white data-[checked]:bg-blue-700"}
+                            >
+                              <span className={"invisible size-2 rounded-full bg-white group-data-[checked]:visible"} />
+                            </Radio>
+                            <Label>{type}</Label>
+                            &nbsp;
+                          </Field>
+                        ))}
                       </RadioGroup>
 
                     </form>
