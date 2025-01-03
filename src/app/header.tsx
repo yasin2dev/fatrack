@@ -5,14 +5,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
 import "@/app/styles/header.css"
 import * as Separator from "@radix-ui/react-separator";
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Label, Radio, RadioGroup, Field } from "@headlessui/react";
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Label, Radio, RadioGroup, Field, Transition } from "@headlessui/react";
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
 import { Types } from 'mongoose';
+import { CheckCircleIcon } from 'lucide-react';
 
 function Header() {
-  const faturaCategories = ['e-Arşiv', 'e-Fatura'];
-  const faturaTypes = ['Satış', 'İade'];
+  const faturaCategories = [
+    {name: 'e-Arşiv'},
+    {name: 'e-Fatura'}
+  ];
+  const faturaTypes = [
+    {name: 'Satış'},
+    {name: 'İade'}
+  ];
   const [open, setOpen] = useState(false);
   const [selectedFatCat, setSelectedFatCat] = useState();
   const [selectedFatType, setSelectedFatType] = useState();
@@ -56,6 +63,14 @@ function Header() {
     setOpen(false);
   }
 
+  
+  const plans = [
+    { name: 'Startup', ram: '12GB', cpus: '6 CPUs', disk: '256GB SSD disk' },
+    { name: 'Business', ram: '16GB', cpus: '8 CPUs', disk: '512GB SSD disk' },
+    { name: 'Enterprise', ram: '32GB', cpus: '12 CPUs', disk: '1TB SSD disk' },
+  ]
+  const [selected, setSelected] = useState(plans[0])
+  
   return (
     <>
       <Dialog open={open} onClose={setOpen} className="relative z-10">
@@ -90,7 +105,7 @@ function Header() {
                         decorative
                         orientation='horizontal'
                       />
-                      <RadioGroup
+                      {/* <RadioGroup
                         value={selectedFatCat}
                         onChange={setSelectedFatCat}
                         aria-label='Fatura Tipi'
@@ -110,28 +125,41 @@ function Header() {
                             &nbsp;
                           </Field>
                         ))}
-                      </RadioGroup>
-                      <RadioGroup
-                        value={selectedFatType}
-                        onChange={setSelectedFatType}
-                        aria-label='Fatura Tipi'
-                        className={"flex mt-3"}
-                      >
-                        <h3 className='mr-2'>Fatura Tipi:</h3>
-                        {faturaTypes.map((type) => (
-                          <Field key={type} className={"flex items-center gap-2"}>
-                            <Radio
-                              value={type}
-                              className={"group flex size-5 items-center justify-center rounded-full border bg-white data-[checked]:bg-blue-700"}
-                            >
-                              <span className={"invisible size-2 rounded-full bg-white group-data-[checked]:visible"} />
-                            </Radio>
-                            <Label>{type}</Label>
-                            &nbsp;
-                          </Field>
+                      </RadioGroup> */}
+                      <RadioGroup by="name" value={selectedFatType} onChange={setSelectedFatType} aria-label="Fatura Kategorisi" className="space-y-2 flex">
+                        <Label className={'my-auto'}>Fatura Kategorisi:</Label>
+                        {faturaTypes.map((fatType) => (
+                          <Radio
+                            key={fatType.name}
+                            value={fatType}
+                            className="group relative w-32 flex cursor-pointer rounded-lg bg-white/5 py-2 px-5 mx-2 text-white shadow-md transition focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-white/10"
+                          >
+                            <div className="flex w-full items-center justify-between">
+                              <div className="text-sm/6">
+                                <p className="font-semibold text-white">{fatType.name}</p>
+                              </div>
+                              <CheckCircleIcon className="size-5 text-blue-400 opacity-0 transition group-data-[checked]:opacity-100" />
+                            </div>
+                          </Radio>
                         ))}
                       </RadioGroup>
-
+                      <RadioGroup by="name" value={selectedFatCat} onChange={setSelectedFatCat} aria-label="Fatura Kategorisi" className="space-y-2 flex">
+                        <Label className={'my-auto'}>Fatura Kategorisi:</Label>
+                        {faturaCategories.map((fatCat) => (
+                          <Radio
+                            key={fatCat.name}
+                            value={fatCat}
+                            className="group relative w-32 flex cursor-pointer rounded-lg bg-white/5 py-2 px-5 mx-2 text-white shadow-md transition focus:outline-none data-[focus]:outline-1 data-[focus]:outline-white data-[checked]:bg-white/10"
+                          >
+                            <div className="flex w-full items-center justify-between">
+                              <div className="text-sm/6">
+                                <p className="font-semibold text-white">{fatCat.name}</p>
+                              </div>
+                              <CheckCircleIcon className="size-5 text-blue-400 opacity-0 transition group-data-[checked]:opacity-100" />
+                            </div>
+                          </Radio>
+                        ))}
+                      </RadioGroup>
                     </form>
                   </div>
                 </div>
