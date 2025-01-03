@@ -70,7 +70,7 @@ function Page() {
             {data?.map(fatura => {
                 if (fatura.category === "675debf13e48f596cb3730f1" && fatura.fat_type === "SATIS") {
                     return (
-                        <div className='bg-gray-300 my-5 mx-2 text-black rounded p-2 w-full h-fit pl-6'>
+                        <div className='bg-blue-700 my-5 mx-2 rounded p-2 w-full h-fit pl-6'>
                             <div className='flex'>
                                 <p><span className={"font-bold"}>Ürün: </span>{fatura.title} - <span className={"font-bold"}>Fatura No: </span>{fatura.fatura_no}</p>
                             </div>
